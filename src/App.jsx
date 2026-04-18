@@ -6,6 +6,10 @@ import { usePersonalNotes } from './hooks/usePersonalNotes';
 import { useAnonymousTips } from './hooks/useAnonymousTips';
 import { usePodo } from './hooks/usePodo';
 import { Timeline } from './components/Timeline';
+import { usePeople } from './hooks/usePeople';
+import { MostSuspicious } from './components/MostSuspicious';
+import { LastSeenWith } from './components/LastSeenWith';
+import { useSearch } from './hooks/useSearch';
 import './index.css';
 
 // Reusable state renderer according to CLAUDE.md Rules
@@ -46,8 +50,10 @@ function App() {
   const personalNotes = usePersonalNotes();
   const anonymousTips = useAnonymousTips();
   const podo = usePodo({ sightings });
+  const people = usePeople({ checkins, messages, sightings, personalNotes, anonymousTips });
 
   const [query, setQuery] = useState('');
+  const searchedPeople = useSearch({ people: people.data, query });
 
   const loggedRef = useRef({
     checkins: false,
@@ -150,10 +156,9 @@ function App() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Name, location, or keyword..."
-                disabled
               />
-              <button className="button-secondary" disabled>
-                Filter
+              <button className="button-secondary" onClick={() => setQuery('')} disabled={!query.trim()}>
+                Clear
               </button>
             </div>
             <div className="hint">
@@ -173,6 +178,35 @@ function App() {
 
           <section style={{ marginTop: 16 }}>
             <Timeline {...podo} />
+          </section>
+
+          <section style={{ marginTop: 16 }}>
+            {podo.loading ? (
+              <div className="state-box loading">Loading last seen with...</div>
+            ) : podo.error ? (
+              <div className="state-box error">Error (last seen with): {podo.error.message}</div>
+            ) : !podo.data?.length ? (
+              <div className="state-box empty">No sightings for Podo</div>
+            ) : (
+              <LastSeenWith podoTimeline={podo.data} />
+            )}
+          </section>
+
+          <section style={{ marginTop: 16 }}>
+            {people.loading ? (
+              <div className="state-box loading">Loading people...</div>
+            ) : people.error ? (
+              <div className="state-box error">Error (people): {people.error.message}</div>
+            ) : !people.data?.length ? (
+              <div className="state-box empty">No people indexed yet</div>
+            ) : (
+              <MostSuspicious
+                people={searchedPeople.data}
+                totalPeopleCount={people.data.length}
+                searchActive={searchedPeople.active}
+                podoTimeline={podo.data}
+              />
+            )}
           </section>
         </main>
       </div>

@@ -273,6 +273,64 @@ button:active {
   word-break: break-word;
 }
 
+.person-card {
+  border-radius: var(--radius);
+  border: 1px solid var(--panel-border);
+  background: rgba(0, 0, 0, 0.20);
+  padding: 0.9rem;
+}
+
+.person-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.person-name {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.person-aliases {
+  margin-top: 4px;
+  font-size: 0.82rem;
+  color: rgba(226, 232, 240, 0.72);
+}
+
+.person-score {
+  min-width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(96, 165, 250, 0.12);
+  border: 1px solid rgba(156, 192, 255, 0.35);
+  font-family: var(--mono);
+  font-weight: 800;
+}
+
+.person-reasons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.chip {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  padding: 0.22rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid var(--panel-border);
+  background: rgba(0, 0, 0, 0.20);
+  color: rgba(248, 250, 252, 0.92);
+}
+
+.chip.muted {
+  color: rgba(226, 232, 240, 0.65);
+}
+
 @media (max-width: 720px) {
   .app-container { padding: 1rem; }
   .desk-top { flex-direction: column; }
