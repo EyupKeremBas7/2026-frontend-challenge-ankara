@@ -11,6 +11,23 @@ Please fill in your information after forking this repository:
 ## Getting Started
 [Add instructions for setting up and running the project]
 
+# Development (no API requests)
+If you want to develop without hitting Jotform API rate limits, the app will **prefer local JSON** in dev mode when these files exist:
+
+- `public/mock/checkins.json`
+- `public/mock/messages.json`
+- `public/mock/sightings.json`
+- `public/mock/personalNotes.json`
+- `public/mock/anonymousTips.json`
+
+To generate them:
+
+```bash
+node scripts/export-submissions.mjs
+node scripts/copy-exports-to-public.mjs
+npm run dev
+```
+
 # 🚀 Challenge Duyurusu
 
 ## 📅 Tarih ve Saat

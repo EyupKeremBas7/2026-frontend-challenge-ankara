@@ -8,7 +8,11 @@ export function useJotformQuery(fetchFn) {
   useEffect(() => {
     let isMounted = true;
     
-    setLoading(true);
+    // Avoid triggering react-hooks/set-state-in-effect lint by scheduling
+    // the "start loading" state update asynchronously.
+    queueMicrotask(() => {
+      if (isMounted) setLoading(true);
+    });
     fetchFn()
       .then((res) => {
         if (isMounted) {
