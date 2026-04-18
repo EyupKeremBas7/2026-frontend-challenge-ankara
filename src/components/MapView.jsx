@@ -1,4 +1,23 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
+// Custom marker icon — simple colored circle
+const customIcon = L.divIcon({
+  className: 'custom-marker',
+  html: `<div style="
+    width: 24px;
+    height: 24px;
+    background: #ef4444;
+    border: 3px solid #fca5a5;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  "></div>`,
+  iconSize: [24, 24],
+  iconAnchor: [12, 12],
+  popupAnchor: [0, -12],
+});
 
 function parseCoordinates(value) {
   if (typeof value !== 'string') return null;
@@ -10,25 +29,25 @@ function parseCoordinates(value) {
   return { lat, lng };
 }
 
-function normalizePoints(points) {
-  if (!points.length) return [];
+function FitBounds({ points }) {
+  const map = useMap();
 
-  const minLat = Math.min(...points.map((p) => p.lat));
-  const maxLat = Math.max(...points.map((p) => p.lat));
-  const minLng = Math.min(...points.map((p) => p.lng));
-  const maxLng = Math.max(...points.map((p) => p.lng));
+  useEffect(() => {
+    if (!points.length) return;
 
-  const latSpan = maxLat - minLat || 1;
-  const lngSpan = maxLng - minLng || 1;
+    if (points.length === 1) {
+      map.setView([points[0].lat, points[0].lng], 14);
+      return;
+    }
 
-  return points.map((point) => ({
-    ...point,
-    x: ((point.lng - minLng) / lngSpan) * 100,
-    y: (1 - (point.lat - minLat) / latSpan) * 100,
-  }));
+    const bounds = points.map((point) => [point.lat, point.lng]);
+    map.fitBounds(bounds, { padding: [28, 28], maxZoom: 15 });
+  }, [map, points]);
+
+  return null;
 }
 
-export function MapView({ loading, error, data }) {
+export function MapView({ loading, error, data, onSelectEvent }) {
   const points = useMemo(() => {
     const rows = Array.isArray(data) ? data : [];
     const parsed = rows
@@ -46,7 +65,7 @@ export function MapView({ loading, error, data }) {
       })
       .filter(Boolean);
 
-    return normalizePoints(parsed);
+    return parsed;
   }, [data]);
 
   if (loading) return <div className="state-box loading">Loading map view...</div>;
@@ -56,6 +75,8 @@ export function MapView({ loading, error, data }) {
   if (!points.length) {
     return <div className="state-box empty">No valid coordinates found for map view</div>;
   }
+
+  const initialCenter = [points[0].lat, points[0].lng];
 
   return (
     <div className="state-box success" style={{ alignItems: 'stretch', textAlign: 'left' }}>
@@ -67,18 +88,27 @@ export function MapView({ loading, error, data }) {
       </div>
 
       <div className="map-shell" style={{ marginTop: 12 }}>
-        <div className="map-canvas">
-          {points.map((point, index) => (
-            <div
-              key={point.id}
-              className="map-point"
-              style={{ left: `${point.x}%`, top: `${point.y}%` }}
-              title={`${point.location} · ${point.timestampRaw}`}
-            >
-              {index + 1}
-            </div>
-          ))}
-        </div>
+        <MapContainer className="map-canvas" center={initialCenter} zoom={12} scrollWheelZoom={false}>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <FitBounds points={points} />
+
+          {points.map((point, index) => {
+            return (
+              <Marker key={point.id} position={[point.lat, point.lng]} icon={customIcon} eventHandlers={{ click: () => onSelectEvent?.(point.id) }}>
+                <Popup>
+                  <strong>{index + 1}. {point.location}</strong>
+                  <br />
+                  {point.timestampRaw}
+                  <br />
+                  {point.lat}, {point.lng}
+                </Popup>
+              </Marker>
+            );
+          })}
+        </MapContainer>
 
         <div className="map-legend">
           {points.slice(0, 8).map((point, index) => (

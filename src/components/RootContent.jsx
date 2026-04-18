@@ -5,17 +5,17 @@ import { LastSeenWith } from './LastSeenWith';
 import { MostSuspicious } from './MostSuspicious';
 import { DetailPanel } from './DetailPanel';
 
-export function RootContent({ currentPath, podo, people, searchedPeople, selectedPerson, setSelectedPersonId }) {
+export function RootContent({ currentPath, podo, people, searchedPeople, selectedPerson, setSelectedPersonId, selectedEventId, setSelectedEventId }) {
   return (
     <main className="dashboard" style={{ position: 'relative' }}>
       {currentPath === '/chain-root' ? (
         <>
           <section id="chain-root" style={{ marginTop: 16 }}>
-            <Timeline {...podo} />
+            <Timeline {...podo} selectedEventId={selectedEventId} onSelectEvent={setSelectedEventId} />
           </section>
 
           <section style={{ marginTop: 16 }}>
-            <MapView {...podo} />
+            <MapView {...podo} selectedEventId={selectedEventId} onSelectEvent={setSelectedEventId} />
           </section>
 
           <section style={{ marginTop: 16 }}>

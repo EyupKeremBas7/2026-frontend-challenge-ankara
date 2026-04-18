@@ -1,10 +1,24 @@
 import React, { useState } from 'react';
 
-function TimelineItem({ event }) {
+function TimelineItem({ event, isSelected, onSelect }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '110px 1fr', gap: 12, padding: '10px 0' }}>
+    <div 
+      style={{ 
+        display: 'grid', 
+        gridTemplateColumns: '110px 1fr', 
+        gap: 12, 
+        padding: '10px 0',
+        backgroundColor: isSelected ? 'rgba(59, 130, 246, 0.1)' : 'transparent',
+        borderLeft: isSelected ? '3px solid #3b82f6' : 'none',
+        paddingLeft: isSelected ? '9px' : '12px',
+        cursor: 'pointer',
+        borderRadius: 4,
+        transition: 'all 0.2s',
+      }}
+      onClick={() => onSelect(event.id)}
+    >
       <div style={{ fontFamily: 'var(--mono)', fontSize: 12, color: 'rgba(226, 232, 240, 0.78)' }}>
         {event.timestampRaw || 'Unknown time'}
       </div>
@@ -44,7 +58,7 @@ function TimelineItem({ event }) {
   );
 }
 
-export function Timeline({ loading, error, data }) {
+export function Timeline({ loading, error, data, selectedEventId, onSelectEvent }) {
   if (loading) return <div className="state-box loading">Loading Podo timeline...</div>;
   if (error) return <div className="state-box error">Error (Podo timeline): {error.message}</div>;
   if (!data?.length) return <div className="state-box empty">No timeline events for Podo</div>;
@@ -61,7 +75,7 @@ export function Timeline({ loading, error, data }) {
       <div style={{ marginTop: 12, borderTop: '1px solid var(--panel-border)' }}>
         {data.map((e) => (
           <div key={e.id} style={{ borderBottom: '1px solid var(--panel-border)' }}>
-            <TimelineItem event={e} />
+            <TimelineItem event={e} isSelected={selectedEventId === e.id} onSelect={onSelectEvent || (() => {})} />
           </div>
         ))}
       </div>

@@ -28,6 +28,7 @@ function App() {
 
   const [query, setQuery] = useState('');
   const [selectedPersonId, setSelectedPersonId] = useState(null);
+  const [selectedEventId, setSelectedEventId] = useState(null);
   const [currentPath, setCurrentPath] = useState(() => window.location.pathname);
   const searchedPeople = useSearch({ people: people.data, query });
 
@@ -227,6 +228,8 @@ function App() {
               searchedPeople={searchedPeople}
               selectedPerson={selectedPerson}
               setSelectedPersonId={setSelectedPersonId}
+              selectedEventId={selectedEventId}
+              setSelectedEventId={setSelectedEventId}
             />
           </>
         )}

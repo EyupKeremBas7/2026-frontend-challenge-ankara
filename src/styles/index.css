@@ -75,6 +75,7 @@ body,
   margin: 0 0 0.35rem 0;
   letter-spacing: -0.02em;
   background: linear-gradient(135deg, #e2e8f0, #93c5fd);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -427,43 +428,15 @@ button:active {
 }
 
 .map-canvas {
-  position: relative;
-  min-height: 260px;
+  width: 100%;
+  height: 360px;
   border: 1px solid var(--panel-border);
   border-radius: 12px;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(96, 165, 250, 0.22), transparent 45%),
-    radial-gradient(circle at 80% 70%, rgba(52, 211, 153, 0.2), transparent 40%),
-    rgba(0, 0, 0, 0.22);
   overflow: hidden;
 }
 
-.map-canvas::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 28px 28px;
-  pointer-events: none;
-}
-
-.map-point {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  min-width: 24px;
-  height: 24px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  font-size: 11px;
-  font-family: var(--mono);
-  font-weight: 700;
-  color: #fff;
-  border: 1px solid rgba(156, 192, 255, 0.7);
-  background: rgba(96, 165, 250, 0.9);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+.map-canvas.leaflet-container {
+  background: rgba(0, 0, 0, 0.18);
 }
 
 .map-legend {
@@ -539,7 +512,7 @@ button:active {
   .detective-hero { width: 88px; height: 88px; }
   .detective-hero-large { width: 160px; height: 160px; }
   .root-menu-grid { grid-template-columns: 1fr; }
-  .map-canvas { min-height: 210px; }
+  .map-canvas { height: 260px; }
   .investigation-title-row {
     grid-template-columns: 1fr;
     justify-items: center;
