@@ -504,15 +504,23 @@ button:active {
 }
 
 @media (max-width: 720px) {
-  .app-container { padding: 1rem; }
-  .desk-top { flex-direction: column; }
+  .app-container { padding: 0.75rem; }
+  .desk-shell { padding: 0.85rem; }
+  .desk-top { flex-direction: column; gap: 0.6rem; padding: 0.4rem 0 0.85rem 0; }
   .search-panel { max-width: 100%; }
   .root-menu-panel { min-width: 0; max-width: 100%; }
   .hero-section { align-items: flex-start; }
   .detective-hero { width: 88px; height: 88px; }
   .detective-hero-large { width: 160px; height: 160px; }
-  .root-menu-grid { grid-template-columns: 1fr; }
+  .root-menu-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+  .root-menu-card { min-height: 110px; padding: 0.85rem; }
+  .root-menu-card strong { font-size: 0.95rem; }
   .map-canvas { height: 260px; }
+  .person-card { padding: 0.7rem; }
+  .person-name { font-size: 0.95rem; }
+  .state-box { padding: 1.2rem 0.85rem; }
+  .state-box h3 { font-size: 1rem; }
+  .person-score { min-width: 38px; height: 38px; font-size: 0.85rem; }
   .investigation-title-row {
     grid-template-columns: 1fr;
     justify-items: center;
@@ -522,5 +530,9 @@ button:active {
   .investigation-title-row button,
   .investigation-title-row h1 {
     justify-self: center;
+    font-size: 1.2rem;
   }
+
+  .search-input { padding: 0.6rem 0.7rem; font-size: 0.95rem; }
+  .button-secondary { padding: 0.45rem 0.75rem; font-size: 0.9rem; }
 }

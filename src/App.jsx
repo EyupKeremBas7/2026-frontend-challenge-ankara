@@ -27,10 +27,20 @@ function App() {
   const people = usePeople({ checkins, messages, sightings, personalNotes, anonymousTips });
 
   const [query, setQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
   const [selectedPersonId, setSelectedPersonId] = useState(null);
   const [selectedEventId, setSelectedEventId] = useState(null);
   const [currentPath, setCurrentPath] = useState(() => window.location.pathname);
-  const searchedPeople = useSearch({ people: people.data, query });
+  
+  // Debounce search query — 300ms delay
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [query]);
+  
+  const searchedPeople = useSearch({ people: people.data, query: debouncedQuery });
 
   const selectedPerson = useMemo(() => {
     const rows = Array.isArray(searchedPeople.data) ? searchedPeople.data : [];
