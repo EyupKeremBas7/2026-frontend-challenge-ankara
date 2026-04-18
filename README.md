@@ -19,6 +19,29 @@
 
 ## Getting Started
 
+## Environment Variables (.env)
+
+Proje canlı Jotform API'den veri çektiği için kök dizinde `.env` dosyası zorunludur.
+
+Örnek `.env`:
+
+```bash
+VITE_API_KEY_1=your_jotform_api_key
+VITE_API_KEY_2=your_second_key_optional
+VITE_API_KEY_3=your_third_key_optional
+
+VITE_FORM_CHECKINS=your_checkins_form_id
+VITE_FORM_MESSAGES=your_messages_form_id
+VITE_FORM_SIGHTINGS=your_sightings_form_id
+VITE_FORM_PERSONAL_NOTES=your_personal_notes_form_id
+VITE_FORM_ANONYMOUS_TIPS=your_anonymous_tips_form_id
+```
+
+Notlar:
+- En az `VITE_API_KEY_1` tanımlı olmalıdır.
+- Form ID'ler doğru değilse ilgili veri kaynağı boş/hata dönebilir.
+- `.env` değiştirdikten sonra dev server'ı yeniden başlat (`npm run dev`).
+
 ```bash
 npm install
 npm run dev
