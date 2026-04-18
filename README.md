@@ -1,7 +1,6 @@
 # Jotform Frontend Challenge Project
 
 ## User Information
-Please fill in your information after forking this repository:
 
 - **Name**: Eyüp Kerem Baş
 
@@ -25,9 +24,9 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:5173` in browser. Navigate to `/chain-root` to see Podo's timeline and map.
+Open `http://localhost:5173` in browser.
 
-### Mock Data Status: ✅ WORKING
+### Data Status: ✅ WORKING
 
 All 5 data sources successfully loaded:
 - Sightings: 9 records
@@ -44,23 +43,6 @@ All 5 data sources successfully loaded:
 - Central figure in investigation network
 
 ---
-
-# Development (no API requests)
-If you want to develop without hitting Jotform API rate limits, the app will **prefer local JSON** in dev mode when these files exist:
-
-- `public/mock/checkins.json`
-- `public/mock/messages.json`
-- `public/mock/sightings.json`
-- `public/mock/personalNotes.json`
-- `public/mock/anonymousTips.json`
-
-To generate them:
-
-```bash
-node scripts/export-submissions.mjs
-node scripts/copy-exports-to-public.mjs
-npm run dev
-```
 
 # 🚀 Challenge Duyurusu
 
