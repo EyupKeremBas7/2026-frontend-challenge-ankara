@@ -4,6 +4,8 @@ import { useMessages } from './hooks/useMessages';
 import { useSightings } from './hooks/useSightings';
 import { usePersonalNotes } from './hooks/usePersonalNotes';
 import { useAnonymousTips } from './hooks/useAnonymousTips';
+import { usePodo } from './hooks/usePodo';
+import { Timeline } from './components/Timeline';
 import './index.css';
 
 // Reusable state renderer according to CLAUDE.md Rules
@@ -43,6 +45,7 @@ function App() {
   const sightings = useSightings();
   const personalNotes = usePersonalNotes();
   const anonymousTips = useAnonymousTips();
+  const podo = usePodo({ sightings });
 
   const [query, setQuery] = useState('');
 
@@ -166,6 +169,10 @@ function App() {
             <StateRenderer name="Sightings" {...sightings} />
             <StateRenderer name="Personal Notes" {...personalNotes} />
             <StateRenderer name="Anonymous Tips" {...anonymousTips} />
+          </section>
+
+          <section style={{ marginTop: 16 }}>
+            <Timeline {...podo} />
           </section>
         </main>
       </div>
