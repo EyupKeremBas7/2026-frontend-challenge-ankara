@@ -6,10 +6,44 @@ Please fill in your information after forking this repository:
 - **Name**: Eyüp Kerem Baş
 
 ## Project Description
-[Add a brief description of your project here]
+
+**Investigation Dashboard** — React-based dashboard that visualizes crowdsourced investigation data about a subject named Podo.
+
+**Core Features:**
+- Timeline view of Podo's movements with coordinates
+- Interactive map with OpenStreetMap (Leaflet)
+- People index with suspicion scoring
+- Chain-of-relations visualization
+- Multi-source data integration (Sightings, Messages, Tips, Notes, Check-ins)
+
+**Tech Stack:** React 19.2.4 · Vite 8.0.4 · Leaflet 1.9.4 + React-Leaflet 5.0.0 · CSS Grid/Flexbox
 
 ## Getting Started
-[Add instructions for setting up and running the project]
+
+```bash
+npm install
+npm run dev
+```
+
+Open `http://localhost:5173` in browser. Navigate to `/chain-root` to see Podo's timeline and map.
+
+### Mock Data Status: ✅ WORKING
+
+All 5 data sources successfully loaded:
+- Sightings: 9 records
+- Messages: 14 records  
+- Anonymous Tips: 5 records
+- Personal Notes: 8 records
+- Check-ins: 9 records
+- **Total: 45 records, 11 unique people indexed**
+
+### Most Suspicious Person: **PODO** (Score: 24.5/100)
+- 6 sightings across locations
+- 8 connections (Kağan, Fatih, Cem, Hami, Aslı, Can, Kağan A., Kagan)
+- 5 messages sent
+- Central figure in investigation network
+
+---
 
 # Development (no API requests)
 If you want to develop without hitting Jotform API rate limits, the app will **prefer local JSON** in dev mode when these files exist:
