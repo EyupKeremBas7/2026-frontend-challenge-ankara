@@ -10,6 +10,7 @@ import { usePeople } from './hooks/usePeople';
 import { MostSuspicious } from './components/MostSuspicious';
 import { LastSeenWith } from './components/LastSeenWith';
 import { useSearch } from './hooks/useSearch';
+import { DetailPanel } from './components/DetailPanel';
 import './index.css';
 
 // Reusable state renderer according to CLAUDE.md Rules
@@ -53,7 +54,15 @@ function App() {
   const people = usePeople({ checkins, messages, sightings, personalNotes, anonymousTips });
 
   const [query, setQuery] = useState('');
+  const [selectedPersonId, setSelectedPersonId] = useState(null);
   const searchedPeople = useSearch({ people: people.data, query });
+
+  const selectedPerson = useMemo(() => {
+    const rows = Array.isArray(searchedPeople.data) ? searchedPeople.data : [];
+    if (!rows.length) return null;
+    if (!selectedPersonId) return rows[0];
+    return rows.find((p) => p.id === selectedPersonId) || rows[0];
+  }, [searchedPeople.data, selectedPersonId]);
 
   const loggedRef = useRef({
     checkins: false,
@@ -204,8 +213,22 @@ function App() {
                 people={searchedPeople.data}
                 totalPeopleCount={people.data.length}
                 searchActive={searchedPeople.active}
+                selectedPersonId={selectedPerson?.id ?? null}
+                onSelectPerson={(person) => setSelectedPersonId(person?.id ?? null)}
                 podoTimeline={podo.data}
               />
+            )}
+          </section>
+
+          <section style={{ marginTop: 16 }}>
+            {people.loading ? (
+              <div className="state-box loading">Loading detail panel...</div>
+            ) : people.error ? (
+              <div className="state-box error">Error (detail panel): {people.error.message}</div>
+            ) : !people.data?.length ? (
+              <div className="state-box empty">No person details available</div>
+            ) : (
+              <DetailPanel selectedPerson={selectedPerson} />
             )}
           </section>
         </main>

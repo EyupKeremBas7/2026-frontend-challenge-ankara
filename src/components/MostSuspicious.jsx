@@ -2,7 +2,14 @@ import React, { useMemo } from 'react';
 import { computeSuspicionScore } from '../utils/suspicionScore';
 import { PersonCard } from './PersonCard';
 
-export function MostSuspicious({ people, podoTimeline, totalPeopleCount = 0, searchActive = false }) {
+export function MostSuspicious({
+  people,
+  podoTimeline,
+  totalPeopleCount = 0,
+  searchActive = false,
+  selectedPersonId = null,
+  onSelectPerson,
+}) {
   const ranked = useMemo(() => {
     const rows = Array.isArray(people) ? people : [];
     const withScore = rows.map((p) => {
@@ -42,6 +49,8 @@ export function MostSuspicious({ people, podoTimeline, totalPeopleCount = 0, sea
             score={score}
             reasons={reasons}
             aliases={person.aliases}
+            selected={selectedPersonId === person.id}
+            onSelect={() => onSelectPerson?.(person)}
             onLog={() => console.log('[RAW DATA] Person', person)}
           />
         ))}

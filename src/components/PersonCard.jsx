@@ -1,8 +1,27 @@
 import React from 'react';
 
-export function PersonCard({ name, score, reasons, aliases, onLog }) {
+export function PersonCard({ name, score, reasons, aliases, onLog, onSelect, selected = false }) {
   return (
-    <div className="person-card">
+    <div
+      className="person-card"
+      role="button"
+      tabIndex={0}
+      onClick={onSelect}
+      onKeyDown={(e) => {
+        if ((e.key === 'Enter' || e.key === ' ') && onSelect) {
+          e.preventDefault();
+          onSelect();
+        }
+      }}
+      style={
+        selected
+          ? {
+              borderColor: 'rgba(156, 192, 255, 0.65)',
+              boxShadow: '0 0 0 3px rgba(96, 165, 250, 0.14)',
+            }
+          : undefined
+      }
+    >
       <div className="person-card-top">
         <div>
           <div className="person-name">{name}</div>
@@ -25,7 +44,13 @@ export function PersonCard({ name, score, reasons, aliases, onLog }) {
       </div>
 
       <div style={{ marginTop: 10, display: 'flex', gap: 8 }}>
-        <button className="button-secondary" onClick={onLog}>
+        <button
+          className="button-secondary"
+          onClick={(e) => {
+            e.stopPropagation();
+            onLog();
+          }}
+        >
           Log person
         </button>
       </div>
