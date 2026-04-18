@@ -21,9 +21,9 @@
 
 ## Environment Variables (.env)
 
-Proje canlı Jotform API'den veri çektiği için kök dizinde `.env` dosyası zorunludur.
+Since the project fetches data from the live Jotform API, a `.env` file is required in the project root.
 
-Örnek `.env`:
+Example `.env`:
 
 ```bash
 VITE_API_KEY_1=your_jotform_api_key
@@ -37,10 +37,10 @@ VITE_FORM_PERSONAL_NOTES=your_personal_notes_form_id
 VITE_FORM_ANONYMOUS_TIPS=your_anonymous_tips_form_id
 ```
 
-Notlar:
-- En az `VITE_API_KEY_1` tanımlı olmalıdır.
-- Form ID'ler doğru değilse ilgili veri kaynağı boş/hata dönebilir.
-- `.env` değiştirdikten sonra dev server'ı yeniden başlat (`npm run dev`).
+Notes:
+- At least `VITE_API_KEY_1` must be defined.
+- If form IDs are incorrect, related data sources may return empty/error states.
+- After changing `.env`, restart the dev server (`npm run dev`).
 
 ```bash
 npm install
@@ -48,6 +48,21 @@ npm run dev
 ```
 
 Open `http://localhost:5173` in browser.
+
+## Optional: Run with Docker
+
+If you want to run the project with Docker (optional):
+
+```bash
+docker compose up --build
+```
+
+Then open: `http://localhost:5173`
+
+Notes:
+- Because `docker-compose.yml` uses `env_file: .env`, the `.env` file is still required.
+- To run in detached mode: `docker compose up -d --build`
+- To stop: `docker compose down`
 
 ### Data Status: ✅ WORKING
 
@@ -67,21 +82,21 @@ All 5 data sources successfully loaded:
 
 ---
 
-# 🚀 Challenge Duyurusu
+# 🚀 Challenge Announcement
 
-## 📅 Tarih ve Saat
-Cumartesi günü başlama saatinden itibaren üç saattir.
+## 📅 Date and Time
+The challenge duration is 3 hours from the official start time on Saturday.
 
-## 🎯 Challenge Konsepti
-Bu challenge'da, size özel hazırlanmış bir senaryo üzerine web uygulaması geliştirmeniz istenecektir. Challenge başlangıcında senaryo detayları paylaşılacaktır.Katılımcılar, verilen GitHub reposunu fork ederek kendi geliştirme ortamlarını oluşturacaklardır.
+## 🎯 Challenge Concept
+In this challenge, participants are expected to build a web application based on a custom scenario. Scenario details are shared at the start of the challenge. Participants should fork the provided GitHub repository and build their solution in their own environment.
 
-## 📦 GitHub Reposu
-Challenge için kullanılacak repo: https://github.com/cemjotform/2026-frontend-challenge-ankara
+## 📦 GitHub Repository
+Repository used in the challenge: https://github.com/cemjotform/2026-frontend-challenge-ankara
 
-## 🛠️ Hazırlık Süreci
-1. GitHub reposunu fork edin
-2. Tercih ettiğiniz framework ile geliştirme ortamınızı hazırlayın
-3. Hazırladığınız setup'ı fork ettiğiniz repoya gönderin
+## 🛠️ Preparation Steps
+1. Fork the GitHub repository
+2. Prepare your development environment with your preferred framework
+3. Push your prepared setup to your forked repository
 
-## 💡 Önemli Notlar
-- Katılımcılar kendi tercih ettikleri framework'leri kullanabilirler
+## 💡 Important Notes
+- Participants may use their preferred framework
